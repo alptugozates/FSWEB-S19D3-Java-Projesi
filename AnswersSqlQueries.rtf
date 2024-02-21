@@ -2,7 +2,7 @@
 \cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
 {\*\expandedcolortbl;;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\paperw11900\paperh16840\margl1440\margr1440\vieww34000\viewh21380\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
 \f0\fs36 \cf0 1) INSERT INTO yazar (yazarad, yazarsoyad)\
@@ -25,7 +25,8 @@ LIMIT 1;\
 SELECT ograd || ' ' || ogrsoyad FROM ogrenci\
 WHERE ogrno BETWEEN 10 AND 30;\
 \
-6) \
+6)  INSERT INTO yazar (yazarad) VALUES ('Nurettin Belek');\
+SELECT yazarno FROM yazar WHERE yazarad = 'Nurettin Belek';\
 \
 7) UPDATE ogrenci\
 SET sinif = '10C'\
@@ -67,19 +68,22 @@ CALL ogrencilistesi();\
 17) CREATE PROCEDURE ekle(\
     IN yeni_ad VARCHAR(255),\
     IN yeni_soyad VARCHAR(255),\
-    IN yeni_numara INT\
-)\
-BEGIN\
-    INSERT INTO Ogrenci (ograd, ogrsoyad, ogrno) VALUES (yeni_ad, yeni_soyad, yeni_numara);\
-END;\
+    IN yeni_numara INT)\
+LANGUAGE \'91\'92sql \
+$BODY$\
+    INSERT INTO ogrenci (ograd, ogrsoyad, ogrno) VALUES (yeni_ad, yeni_soyad, yeni_numara);\
+ $BODY$;\
 CALL ekle('YeniAd', 'YeniSoyad', 12345);\
 \
 18) CREATE PROCEDURE sil(\
     IN silinecek_numara INT)\
-BEGIN\
+LANGUAGE \'91sql\'92\
+AS $BODY$\
     DELETE FROM ogrenci WHERE ogrno = silinecek_numara;\
-END;\
-CALL sil(12345);\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 $BODY$;\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 CALL sil(12345);\
 \
 19) CREATE PROCEDURE sinifDegistir(\
     IN ogrenci_numara INT,\
